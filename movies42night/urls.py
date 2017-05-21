@@ -9,5 +9,5 @@ urlpatterns = [
     url(r'^movies/add/$', views.add, name='movies42night'),
     url(r'^movies/add/$', views.add, name='add'),
     url(r'^movies/$', views.list, name='movies42night'),
-    url(r'^movies/add/$', views.list, name='list'),
+    url(r'^movies/$', views.list, name='list'),
 ]
