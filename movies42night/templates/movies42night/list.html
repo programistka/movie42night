@@ -1,0 +1,13 @@
+{% extends 'movies42night/base.html' %}
+{% block content %}
+    <h1>Movies list</h1>
+    {% if movies_list %}
+        <ul>
+        {% for movie in movies_list %}
+            <li><a href="{% url 'movies42night:detail' movie.id %}">{{ movie.title }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No movies are available.</p>
+    {% endif %}
+{% endblock content %}

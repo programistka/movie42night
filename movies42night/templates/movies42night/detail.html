@@ -1,4 +1,7 @@
-<h1>{{ movie_details.title }}</h1>
-<ul>
-This is movie!
-</ul>
+{% extends 'movies42night/base.html' %}
+{% block content %}
+    <h1>{{ movie_details.title }}</h1>
+    <ul>
+        This is movie!
+    </ul>
+{% endblock content %}
