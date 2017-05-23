@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from movies42night.models import Movie, Type
+from movies42night.models import Movie, Status
 
 
 def index(request):
@@ -25,7 +25,7 @@ def list(request):
 
 
 def add(request):
-    types = Type.objects.all()
+    types = Status.objects.all()
     if request.method == 'POST':
         movie = Movie(title=request.POST['title'])
         movie.save()

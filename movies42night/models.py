@@ -8,5 +8,5 @@ class Movie(models.Model):
         return self.title
 
 
-class Type(models.Model):
+class Status(models.Model):
     name = models.CharField(max_length=100)
