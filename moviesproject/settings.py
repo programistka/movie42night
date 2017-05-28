@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangobower',
+    #'debug_toolbar'
 ]
 
 STATICFILES_FINDERS = [
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'moviesproject.urls'
@@ -135,3 +137,5 @@ STATIC_URL = '/static/'
 BOWER_INSTALLED_APPS = (
     'bootstrap',
 )
+
+INTERNAL_IPS = ('127.0.0.1',)

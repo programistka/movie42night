@@ -13,8 +13,11 @@
                 <tr>
                     <td class="col-md-*"><a href="{% url 'movies42night:detail' movie.id %}">{{ movie.title }}</a></td>
                     <td class="col-md-2">
-                        <button type="button" class="btn btn-success">Accept</button>
-                        <button type="button" class="btn btn-danger">Reject</button>
+                        <form method="post" action="process_movie/{{movie.id}}" name="process_movie">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success" name="accepted">Accept</button>
+                            <button type="submit" class="btn btn-danger" name="rejected">Reject</button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}
