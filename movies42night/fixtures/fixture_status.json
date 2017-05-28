@@ -1,0 +1,30 @@
+[
+  {
+    "model": "movies42night.status",
+    "pk": 1,
+    "fields": {
+      "name": "New"
+    }
+  },
+  {
+    "model": "movies42night.status",
+    "pk": 2,
+    "fields": {
+      "name": "Accepted"
+    }
+  },
+  {
+    "model": "movies42night.status",
+    "pk": 3,
+    "fields": {
+      "name": "Rejected"
+    }
+  },
+  {
+    "model": "movies42night.status",
+    "pk": 4,
+    "fields": {
+      "name": "Private"
+    }
+  }
+]
