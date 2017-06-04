@@ -1,8 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from filmweb import Filmweb
 
 from movies42night.forms import MovieForm, MovieProcessForm
 from movies42night.models import Movie, Status
+
 
 
 def index(request):
@@ -60,6 +62,9 @@ def list_private(request):
 
 def add(request):
     if request.method == "POST":
+        fw = Filmweb()
+        movies = fw.search_movie("Kruk")
+        print(movies[0]['desc'])
         form = MovieForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
