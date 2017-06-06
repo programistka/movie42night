@@ -6,7 +6,6 @@ from movies42night.forms import MovieForm, MovieProcessForm
 from movies42night.models import Movie, Status
 
 
-
 def index(request):
     return HttpResponse("Hello, world. This is index.")
 
@@ -62,17 +61,24 @@ def list_private(request):
 
 def add(request):
     if request.method == "POST":
-        fw = Filmweb()
-        movies = fw.search_movie("Kruk")
-        print(movies[0]['desc'])
         form = MovieForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.save()
-            return redirect('/movies42night/movies/all', pk=post.pk)
+            return redirect('/movies42night/movies/getfilmwebinformation', title=post.title)
     else:
         form = MovieForm()
     return render(request, 'movies42night/add.html', {'form': form})
+
+
+def get_filmweb_information(request, title):
+    fw = Filmweb()
+    movies = fw.search_movie(title)
+    print(movies[0]['desc'])
+    context = {
+        'movie_desc': movies[0]['desc']
+    }
+    return render(request, 'movies42night/getfilmwebinformation.html', context)
 
 
 def process_movie(request, pk):

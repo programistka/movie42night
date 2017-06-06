@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^movies/new$', views.list_new, name='list_new'),
     url(r'^movies/private', views.list_private, name='list_private'),
     url(r'^movies/process_movie/(?P<pk>[0-9]+)', views.process_movie, name='process_movie'),
+    url(r'^movies/getfilmwebinformation/(?P<title>[a-zA-Z]+)', views.get_filmweb_information, name='getfilmwebinformation'),
 ]
