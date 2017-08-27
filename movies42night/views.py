@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from filmweb import Filmweb
 
 from movies42night.forms import MovieForm, MovieProcessForm
-from movies42night.models import Movie, Status
+from movies42night.models import Movie, Status, Details
 
 
 def index(request):
@@ -11,9 +11,11 @@ def index(request):
 
 
 def detail(request, movie_id):
-    movie_details = Movie.objects.get(id=movie_id)
+    movie = Movie.objects.get(id=movie_id)
+    details = Details.objects.get(movie=movie)
     context = {
-        'movie_details': movie_details
+        'movie': movie,
+        'details': details
     }
     return render(request, 'movies42night/detail.html', context)
 
@@ -65,7 +67,14 @@ def add(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.save()
-            return redirect('/movies42night/movies/getfilmwebinformation', title=post.title)
+            fw = Filmweb()
+            movies = fw.search_movie(post.title)
+            movie = Movie.objects.get(id=post.id)
+            Details.objects.create(movie = movie, description_from_filmweb=movies[0]['desc'], rating_from_filmweb=movies[0]['votinginfo'])
+            context = {
+                'movie_desc': movies[0]['desc']
+            }
+            return render(request, 'movies42night/getfilmwebinformation.html', context)
     else:
         form = MovieForm()
     return render(request, 'movies42night/add.html', {'form': form})
@@ -74,7 +83,6 @@ def add(request):
 def get_filmweb_information(request, title):
     fw = Filmweb()
     movies = fw.search_movie(title)
-    print(movies[0]['desc'])
     context = {
         'movie_desc': movies[0]['desc']
     }

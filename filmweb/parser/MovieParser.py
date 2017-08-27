@@ -162,3 +162,8 @@ class MovieParser(ObjectParser):
         for photo in photoList("img", {'class': "lbProxy"}):
             images.append({'href': photo['src'].replace(".2.jpg", '.3.jpg'), 'thumb': photo['src']})
         return images
+
+    def parse_votinginfo(self):
+        voting_info = self.soup.find("span", {'itemprop': "ratingValue"})
+        voting = float(voting_info.text.replace(',', '.'))
+        return voting

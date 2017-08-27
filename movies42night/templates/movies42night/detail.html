@@ -1,7 +1,9 @@
 {% extends 'movies42night/base.html' %}
 {% block content %}
-    <h1>{{ movie_details.title }}</h1>
+    <h1>{{ movie.title }}</h1>
     <ul>
         This is movie!
     </ul>
+    {{ details.description_from_filmweb }}
+    {{ details.rating_from_filmweb }}
 {% endblock content %}
