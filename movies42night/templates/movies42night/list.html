@@ -12,11 +12,13 @@
             {% for movie in movies_list %}
                 <tr>
                     <td class="col-md-*"><a href="{% url 'movies42night:detail' movie.id %}">{{ movie.title }}</a></td>
-                    <td class="col-md-2">
+                    <td class="col-md-3">
                         <form method="post" action="process_movie/{{movie.id}}" name="process_movie">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-success" name="accepted">Accept</button>
                             <button type="submit" class="btn btn-danger" name="rejected">Reject</button>
+                            <!--how only when film was added by the logged in user-->
+                            <button type="submit" class="btn btn-danger" name="delete">Delete</button>
                         </form>
                     </td>
                 </tr>

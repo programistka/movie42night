@@ -105,3 +105,6 @@ def process_movie(request, pk):
                 movie.status = Status.objects.get(id=3)
                 movie.save()
                 return redirect('/movies42night/movies/rejected')
+            if 'delete' in request.POST:
+                movie.delete()
+                return redirect('/movies42night/movies/all')
