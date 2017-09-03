@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from filmweb import Filmweb
 
 from movies42night.forms import MovieForm, MovieProcessForm
-from movies42night.models import Movie, Status, Details
+from movies42night.models import Movie, Status, Details, User
 
 
 @login_required
@@ -73,9 +73,11 @@ def list_private(request):
 @login_required
 def add(request):
     if request.method == "POST":
+        user = User.objects.get(email=request.user.email)
         form = MovieForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
+            post.user = user
             post.save()
             fw = Filmweb()
             movies = fw.search_movie(post.title)
