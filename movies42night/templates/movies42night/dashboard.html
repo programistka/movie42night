@@ -1,0 +1,42 @@
+{% extends 'movies42night/base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h2 class="card-title">Rejected</h2>
+                        <h6 class="card-subtitle mb-2 text-muted">You must watch it alone:(</h6>
+                        <ul>
+                        {% for movie in rejected %}
+                            <li>{{movie.title}}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <a href="#" class="btn btn-primary">See more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h2 class="card-title">Accepted</h2>
+                        <h6 class="card-subtitle mb-2 text-muted">Watch these together</h6>
+                        <ul>
+                        {% for movie in accepted %}
+                            <li>{{movie.title}}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <a href="#" class="btn btn-primary">See more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}

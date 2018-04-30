@@ -2,44 +2,33 @@
 {% load static %}
 <html lang="en">
 <head>
-    <link href='{% static 'bootstrap/dist/css/bootstrap.css' %}' rel='stylesheet'>
-    <style>
-        body {
-          padding-top: 60px;
-        }
-        .starter-template {
-          padding: 40px 15px;
-          text-align: center;
-        }
-    </style>
+  {# Load the tag library #}
+  {% load bootstrap4 %}
+  {# Load CSS and JavaScript #}
+  {% bootstrap_css %}
+  {% bootstrap_javascript jquery='full' %}
+  {# Display django.contrib.messages as Bootstrap alerts #}
+  {% bootstrap_messages %}
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Movie42night</a>
-    </div>
-    <div id="navbar" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li><a href="{% url 'movies42night:list_all' %}">Home</a></li>
-        <li><a href="{% url 'movies42night:add_proposition' %}">Add proposition</a></li>
-        <li><a href="{% url 'movies42night:list_all' %}">All</a></li>
-        <li><a href="{% url 'movies42night:list_accepted' %}">Accepted</a></li>
-        <li><a href="{% url 'movies42night:list_rejected' %}">Rejected</a></li>
-        <li><a href="{% url 'movies42night:list_new' %}">New propositions</a></li>
-        <li><a href="{% url 'movies42night:list_private' %}">Private</a></li>
-        <li style="color:#FFF">Hello {{user.email}}</li>
-      </ul>
-    </div><!--/.nav-collapse -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Movie42night</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+        <a class="nav-link" href="{% url 'movies42night:list_all' %}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'movies42night:add_proposition' %}">Add proposition</a>
+      </li>
+    </ul>
   </div>
 </nav>
-<div class="content container theme-showcase" role="main">
+<div class="container-fluid mt-5" role="main">
     {% block content %}
     {% endblock %}
 </div>

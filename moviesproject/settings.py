@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'djangobower',
     'filmweb',
     'social_django',
+    'bootstrap4'
     #'debug_toolbar'
 ]
 
@@ -148,7 +149,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 BOWER_INSTALLED_APPS = (
-    'bootstrap',
+    'bootstrap4',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)

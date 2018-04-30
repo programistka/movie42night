@@ -1,6 +1,4 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
 
 from filmweb import Filmweb
 
@@ -8,12 +6,20 @@ from movies42night.forms import MovieForm, MovieProcessForm
 from movies42night.models import Movie, Status, Details, User
 
 
-@login_required
+#@login_required
 def index(request):
-    return HttpResponse("Hello, world. This is index.")
+    #reported by user and rejected by others
+    rejected = Movie.objects.filter(user_id=1).filter(status_id=3)
+    #no matter who reported - everyone accepted
+    accepted = Movie.objects.filter(status_id=2)
+    context = {
+        'rejected': rejected,
+        'accepted': accepted,
+    }
+    return render(request, 'movies42night/dashboard.html', context);
 
 
-@login_required
+#@login_required
 def detail(request, movie_id):
     movie = Movie.objects.get(id=movie_id)
     details = Details.objects.get(movie=movie)
@@ -24,7 +30,7 @@ def detail(request, movie_id):
     return render(request, 'movies42night/detail.html', context)
 
 
-@login_required
+#@login_required
 def list_all(request):
     print("list all")
     movies = Movie.objects.all()
@@ -34,7 +40,7 @@ def list_all(request):
     return render(request, 'movies42night/list.html', context)
 
 
-@login_required
+#@login_required
 def list_accepted(request):
     movies = Movie.objects.filter(status=2)
     context = {
@@ -43,7 +49,7 @@ def list_accepted(request):
     return render(request, 'movies42night/list.html', context)
 
 
-@login_required
+#@login_required
 def list_rejected(request):
     movies = Movie.objects.filter(status=3)
     context = {
@@ -52,7 +58,7 @@ def list_rejected(request):
     return render(request, 'movies42night/list.html', context)
 
 
-@login_required
+#@login_required
 def list_new(request):
     movies = Movie.objects.filter(status=1)
     context = {
@@ -61,7 +67,7 @@ def list_new(request):
     return render(request, 'movies42night/list.html', context)
 
 
-@login_required
+#@login_required
 def list_private(request):
     movies = Movie.objects.filter(status=3).filter(status=4)
     context = {
@@ -70,7 +76,7 @@ def list_private(request):
     return render(request, 'movies42night/list.html', context)
 
 
-@login_required
+#@login_required
 def add(request):
     if request.method == "POST":
         user = User.objects.get(email=request.user.email)
@@ -92,7 +98,7 @@ def add(request):
     return render(request, 'movies42night/add.html', {'form': form})
 
 
-@login_required
+#@login_required
 def get_filmweb_information(request, title):
     fw = Filmweb()
     movies = fw.search_movie(title)
@@ -102,7 +108,7 @@ def get_filmweb_information(request, title):
     return render(request, 'movies42night/getfilmwebinformation.html', context)
 
 
-@login_required
+#@login_required
 def process_movie(request, pk):
     print("process movie")
     movie = get_object_or_404(Movie, pk=pk)
