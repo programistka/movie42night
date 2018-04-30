@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'djangobower',
-    'filmweb',
     'social_django',
     'bootstrap4'
     #'debug_toolbar'

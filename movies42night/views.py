@@ -1,20 +1,24 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
-from filmweb import Filmweb
+from filmweb.filmweb import Filmweb
 
 from movies42night.forms import MovieForm, MovieProcessForm
 from movies42night.models import Movie, Status, Details, User
 
 
 #@login_required
-def index(request):
+def dashboard(request):
     #reported by user and rejected by others
     rejected = Movie.objects.filter(user_id=1).filter(status_id=3)
     #no matter who reported - everyone accepted
     accepted = Movie.objects.filter(status_id=2)
+    #added by others not seen be me
+    new = Movie.objects.filter(status_id=1)
+    print(new)
     context = {
         'rejected': rejected,
         'accepted': accepted,
+        'new': new
     }
     return render(request, 'movies42night/dashboard.html', context);
 
@@ -79,18 +83,29 @@ def list_private(request):
 #@login_required
 def add(request):
     if request.method == "POST":
-        user = User.objects.get(email=request.user.email)
+        user = User.objects.get(email='iwona.lalik@gmail.com')
         form = MovieForm(request.POST)
         if form.is_valid():
+            #get filmweb information if exists
+            #check if the movie with such name and release date exists - if so print the message
+            #if not add the item to the database
+
+
             post = form.save(commit=False)
             post.user = user
             post.save()
             fw = Filmweb()
-            movies = fw.search_movie(post.title)
+            movies = fw.search(post.title)
+            if len(movies) == 0:
+                context = {}
+                return render(request, 'movies42night/getfilmwebinformation.html', context)
+            movie_info = movies[0].get_info();
             movie = Movie.objects.get(id=post.id)
-            Details.objects.create(movie = movie, description_from_filmweb=movies[0]['desc'], rating_from_filmweb=movies[0]['votinginfo'])
+            date = movie_info['premiere'].split('-');
+            Details.objects.create(movie=movie, description_from_filmweb=movie_info['description_short'],
+                                   rating_from_filmweb=movie_info['rate'], year=date[0])
             context = {
-                'movie_desc': movies[0]['desc']
+                'movie_desc': movie_info['description_short']
             }
             return render(request, 'movies42night/getfilmwebinformation.html', context)
     else:
