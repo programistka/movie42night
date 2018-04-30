@@ -86,22 +86,19 @@ def add(request):
         user = User.objects.get(email='iwona.lalik@gmail.com')
         form = MovieForm(request.POST)
         if form.is_valid():
-            #get filmweb information if exists
-            #check if the movie with such name and release date exists - if so print the message
-            #if not add the item to the database
-
-
+            # get filmweb information if exists
+            # check if the movie with such name and release date exists - if so print the message
+            # if not add the item to the database
+            title = request.POST['title']
+            fw = Filmweb()
+            movies = fw.search(title)
             post = form.save(commit=False)
             post.user = user
             post.save()
-            fw = Filmweb()
-            movies = fw.search(post.title)
-            if len(movies) == 0:
-                context = {}
-                return render(request, 'movies42night/getfilmwebinformation.html', context)
-            movie_info = movies[0].get_info();
             movie = Movie.objects.get(id=post.id)
+            movie_info = movies[0].get_info();
             date = movie_info['premiere'].split('-');
+
             Details.objects.create(movie=movie, description_from_filmweb=movie_info['description_short'],
                                    rating_from_filmweb=movie_info['rate'], year=date[0])
             context = {
